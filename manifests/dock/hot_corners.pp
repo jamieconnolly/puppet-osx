@@ -1,49 +1,59 @@
-# Public: Define actions for hot corners
+# Public: Set the hot corner actions
 #
 # Parameters
 #
-#  The available actions are: ['Mission Control'|'Application Windows'|'Desktop'|'Start Screen Saver'|'Disable Screen Saver'|'Dashboard'|'Put Display to Sleep'|'Launchpad'|'Notification Center']
+#   bottom_left =>
+#     A string or hash containing the action and/or modifier for the bottom left corner
 #
-#  top_left: Action for the top left corner
-#  top_right: Action for the top right corner
-#  bottom_left: Action for the bottom left corner
-#  bottom_right: Action for the bottom right corner
+#   bottom_right =>
+#     A string or hash containing the action and/or modifier for the bottom right corner
 #
-# Examples
+#   top_right =>
+#     A string or hash containing the action and/or modifier for the top right corner
 #
-#   class { 'osx::dock::hot_corners':
-#     top_left => 'Desktop'
-#     top_right => 'Application Windows'
-#     bottom_right => 'Dashboard'
-#   }
+#   top_left =>
+#     A string or hash containing the action and/or modifier for the top left corner
 #
-class osx::dock::hot_corners (
-  $top_left = undef,
-  $top_right = undef,
+
+class osx::dock::hot_corners(
   $bottom_left = undef,
-  $bottom_right = undef
+  $bottom_right = undef,
+  $top_right = undef,
+  $top_left = undef
 ) {
-  if ($top_left) {
-    osx::dock::hot_corner { 'Top Left':
-      action => $top_left
+  if $bottom_left != undef {
+    if is_string($bottom_left) {
+      $_bl_params = { 'action' => $bottom_left }
+    } else {
+      $_bl_params = $bottom_left
     }
+    ensure_resource('osx::dock::hot_corner', 'bottom left', $_bl_params)
   }
 
-  if ($top_right) {
-    osx::dock::hot_corner { 'Top Right':
-      action => $top_right
+  if $bottom_right != undef {
+    if is_string($bottom_right) {
+      $_br_params = { 'action' => $bottom_right }
+    } else {
+      $_br_params = $bottom_right
     }
+    ensure_resource('osx::dock::hot_corner', 'bottom right', $_br_params)
   }
 
-  if ($bottom_left) {
-    osx::dock::hot_corner { 'Bottom Left':
-      action => $bottom_left
+  if $top_right != undef {
+    if is_string($top_right) {
+      $_tr_params = { 'action' => $top_right }
+    } else {
+      $_tr_params = $top_right
     }
+    ensure_resource('osx::dock::hot_corner', 'top right', $_tr_params)
   }
 
-  if ($bottom_right) {
-    osx::dock::hot_corner { 'Bottom Right':
-      action => $bottom_right
+  if $top_left != undef {
+    if is_string($top_left) {
+      $_tl_params = { 'action' => $top_left }
+    } else {
+      $_tl_params = $top_left
     }
+    ensure_resource('osx::dock::hot_corner', 'top left', $_tl_params)
   }
 }

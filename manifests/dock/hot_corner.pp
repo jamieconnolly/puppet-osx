@@ -2,65 +2,72 @@
 #
 # Parameters
 #
-#  action: Action of the hot corner
-#    ['Mission Control'|'Application Windows'|'Desktop'|'Start Screen Saver'|'Disable Screen Saver'|'Dashboard'|'Put Display to Sleep'|'Launchpad'|'Notification Center']
+#   action =>
+#     The action to trigger
 #
-#  position: Position of the hot corner (default value: $name)
-#    ['Top Left'|'Top Right'|'Bottom Left'|'Bottom Right']
+#   corner =>
+#     The position of the hot corner
 #
-# Examples
+#   modifier =>
+#     The modifier key
 #
-#   osx::dock::hot_corner { 'Name':
-#     $action => 'Desktop'
-#     $position => 'Top Left'
-#   }
-#
-#   osx::dock::hot_corner { 'Top Right':
-#     $action => 'Desktop'
-#   }
-#
-define osx::dock::hot_corner (
-  $action = undef,
-  $position = $name
+
+define osx::dock::hot_corner(
+  $corner = $name,
+  $action = 'do nothing',
+  $modifier = 'none'
 ) {
   include osx::dock
 
-  validate_re($position, ['Top Left', 'Top Right', 'Bottom Left', 'Bottom Right'])
-  validate_re($action, ['Mission Control', 'Application Windows', 'Desktop', 'Start Screen Saver', 'Disable Screen Saver', 'Dashboard', 'Put Display to Sleep', 'Launchpad', 'Notification Center'])
+  validate_re($action, [
+    'do nothing', 'mission control', 'show application windows', 'desktop', 'start screensaver',
+    'disable screensaver', 'dashboard', 'sleep display', 'launchpad', 'notification center'
+  ])
+  validate_re($corner, ['bottom left', 'bottom right', 'top left', 'top right'])
+  validate_re($modifier, ['command', 'control', 'none', 'option', 'shift'])
 
-  $position_value = $position ? {
-    'Top Left' => 'tl',
-    'Top Right' => 'tr',
-    'Bottom Left' => 'bl',
-    'Bottom Right' => 'br'
+  $action_int = $action ? {
+    'do nothing'               => 0,
+    'mission control'          => 2,
+    'show application windows' => 3,
+    'desktop'                  => 4,
+    'start screensaver'        => 5,
+    'disable screensaver'      => 6,
+    'dashboard'                => 7,
+    'sleep display'            => 10,
+    'launchpad'                => 11,
+    'notification center'      => 12
   }
 
-  $action_value = $action ? {
-    'Mission Control' => 2,
-    'Application Windows' => 3,
-    'Desktop' => 4,
-    'Start Screen Saver' => 5,
-    'Disable Screen Saver' => 6,
-    'Dashboard' => 7,
-    'Put Display to Sleep' => 10,
-    'Launchpad' => 11,
-    'Notification Center' => 12
+  $corner_abbrev = $corner ? {
+    'bottom left'  => 'bl',
+    'bottom right' => 'br',
+    'top right'    => 'tr',
+    'top left'     => 'tl'
   }
 
-  boxen::osx_defaults { "Hot Corners ${position} Action":
+  $modifier_int = $modifier ? {
+    'command' => 1048576,
+    'control' => 262144,
+    'none'    => 0,
+    'option'  => 524288,
+    'shift'   => 131072,
+  }
+
+  boxen::osx_defaults { "Set the ${corner} hot corner to ${action}":
     domain => 'com.apple.dock',
-    key    => "wvous-${position_value}-corner",
-    type   => int,
-    value  => $action_value,
+    key    => "wvous-${corner_abbrev}-corner",
+    type   => 'int',
+    value  => $action_int,
     user   => $::boxen_user,
     notify => Exec['killall Dock'];
   }
 
-  boxen::osx_defaults { "Hot Corners ${position} Modifier":
+  boxen::osx_defaults { "Set the modifier for the ${corner} hot corner to ${modifier}":
     domain => 'com.apple.dock',
-    key    => "wvous-${position_value}-modifier",
-    type   => int,
-    value  => 0,
+    key    => "wvous-${corner_abbrev}-modifier",
+    type   => 'int',
+    value  => $modifier_int,
     user   => $::boxen_user,
     notify => Exec['killall Dock'];
   }

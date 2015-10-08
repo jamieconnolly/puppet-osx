@@ -1,4 +1,5 @@
-# Public: Sets the icons's size
+# Public: Sets the icon size for the Dock
+
 class osx::dock::icon_size($size = 36) {
   include osx::dock
 

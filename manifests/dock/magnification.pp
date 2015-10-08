@@ -1,38 +1,38 @@
-# Public: Sets dock icon magnification
+# Public: Set the dock icon magnification
 #
-# Examples
+# Parameters
 #
-#   # Set dock icon magnification to true, with 128px magnified icons
-#   include osx::dock::magnification
-#
-#   # ...or manage the icon size yourself!
-#   class { 'osx::dock::magnification':
-#     magnification => [true|false]
-#     magnification_size => [16-128]
-#   }
-#
+#   magnified_icon_size =>
+#     The size of the icon when magnified
 #
 
-
-class osx::dock::magnification ($magnification = true, $magnification_size = '128'){
+class osx::dock::magnification($ensure = 'present', $magnified_icon_size = undef) {
   include osx::dock
 
-  boxen::osx_defaults { 'magnification':
-    domain => 'com.apple.dock',
+  validate_re($ensure, '^(present|absent)$', "osx::dock::magnification([ensure] must be present or absent, is ${ensure}")
+
+  $enabled = $ensure ? {
+    present => true,
+    default => false
+  }
+
+  boxen::osx_defaults { 'toggle magnification':
     key    => 'magnification',
-    type   => 'bool',
-    value  => $magnification,
-    user   => $::boxen_user,
-    notify => Exec['killall Dock'];
-  }
-
-  boxen::osx_defaults { 'magnification_size':
     domain => 'com.apple.dock',
-    key    => 'largesize',
-    type   => int,
-    value  => $magnification_size,
+    type   => 'bool',
+    value  => $enabled,
     user   => $::boxen_user,
     notify => Exec['killall Dock'];
   }
 
+  if $magnified_icon_size != undef {
+    boxen::osx_defaults { 'set magnified icon size':
+      key    => 'largesize',
+      domain => 'com.apple.dock',
+      type   => 'int',
+      value  => $magnified_icon_size,
+      user   => $::boxen_user,
+      notify => Exec['killall Dock'];
+    }
+  }
 }
