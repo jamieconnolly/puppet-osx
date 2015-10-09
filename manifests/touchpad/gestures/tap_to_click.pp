@@ -8,31 +8,30 @@ class osx::touchpad::gestures::tap_to_click($ensure = 'present') {
     default => 0
   }
 
-  boxen::osx_defaults { 'toggle tap-to-click (bluetooth)':
-    ensure => present,
-    domain => 'com.apple.driver.AppleBluetoothMultitouch.trackpad',
-    key    => 'Clicking',
-    type   => 'int',
-    value  => $enabled_int,
-    user   => $::boxen_user;
-  }
+  boxen::osx_defaults {
+    'toggle tap-to-click (part 1)':
+      ensure => present,
+      domain => 'com.apple.driver.AppleBluetoothMultitouch.trackpad',
+      key    => 'Clicking',
+      type   => 'int',
+      value  => $enabled_int,
+      user   => $::boxen_user;
 
-  boxen::osx_defaults { 'toggle tap-to-click (mouse)':
-    ensure => present,
-    domain => 'NSGlobalDomain',
-    key    => 'com.apple.mouse.tapBehavior',
-    type   => 'int',
-    value  => $enabled_int,
-    user   => $::boxen_user;
-  }
+    'toggle tap-to-click (part 2)':
+      ensure => present,
+      domain => 'NSGlobalDomain',
+      key    => 'com.apple.mouse.tapBehavior',
+      type   => 'int',
+      value  => $enabled_int,
+      user   => $::boxen_user;
 
-  boxen::osx_defaults { 'toggle tap-to-click (current host)':
-    ensure => present,
-    domain => 'NSGlobalDomain',
-    host   => 'currentHost',
-    key    => 'com.apple.mouse.tapBehavior',
-    type   => 'int',
-    value  => $enabled_int,
-    user   => $::boxen_user;
+    'toggle tap-to-click (part 3)':
+      ensure => present,
+      domain => 'NSGlobalDomain',
+      host   => 'currentHost',
+      key    => 'com.apple.mouse.tapBehavior',
+      type   => 'int',
+      value  => $enabled_int,
+      user   => $::boxen_user;
   }
 }
