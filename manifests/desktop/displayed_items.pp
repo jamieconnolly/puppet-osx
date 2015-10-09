@@ -1,4 +1,4 @@
-# Public: Configure the displayed items on the desktop
+# Public: Configure the displayed items on the Desktop
 
 class osx::desktop::displayed_items(
   $internal_hard_drives = undef,

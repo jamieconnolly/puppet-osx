@@ -1,6 +1,6 @@
-# Public: Set the arrangement on the desktop
+# Public: Set the icon arrangement in the Finder
 
-class osx::desktop::arrangement($style = 'grid') {
+class osx::finder::icon_arrangement($style = 'grid') {
   include osx::finder
 
   validate_re($style, ['none', 'grid', 'name', 'kind', 'size', 'label', 'date added', 'date created', 'date last opened', 'date modified'])
@@ -13,7 +13,11 @@ class osx::desktop::arrangement($style = 'grid') {
     default            => $style
   }
 
-  plist_entry { 'DesktopViewSettings:IconViewSettings:arrangeBy':
+  plist_entry { [
+    'DesktopViewSettings:IconViewSettings:arrangeBy',
+    'FK_StandardViewSettings:IconViewSettings:arrangeBy',
+    'StandardViewSettings:IconViewSettings:arrangeBy'
+  ]:
     ensure => present,
     path   => "/Users/${::boxen_user}/Library/Preferences/com.apple.finder.plist",
     value  => $_style,
