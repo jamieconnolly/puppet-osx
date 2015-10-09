@@ -54,21 +54,21 @@ define osx::dock::hot_corner(
     'shift'   => 131072,
   }
 
-  boxen::osx_defaults { "Set the ${corner} hot corner to ${action}":
-    domain => 'com.apple.dock',
-    key    => "wvous-${corner_abbrev}-corner",
-    type   => 'int',
-    value  => $action_int,
-    user   => $::boxen_user,
-    notify => Exec['killall Dock'];
-  }
+  boxen::osx_defaults {
+    "Set the ${corner} hot corner to ${action}":
+      domain => 'com.apple.dock',
+      key    => "wvous-${corner_abbrev}-corner",
+      type   => 'int',
+      value  => $action_int,
+      user   => $::boxen_user,
+      notify => Exec['killall Dock'];
 
-  boxen::osx_defaults { "Set the modifier for the ${corner} hot corner to ${modifier}":
-    domain => 'com.apple.dock',
-    key    => "wvous-${corner_abbrev}-modifier",
-    type   => 'int',
-    value  => $modifier_int,
-    user   => $::boxen_user,
-    notify => Exec['killall Dock'];
+    "Set the modifier for the ${corner} hot corner to ${modifier}":
+      domain => 'com.apple.dock',
+      key    => "wvous-${corner_abbrev}-modifier",
+      type   => 'int',
+      value  => $modifier_int,
+      user   => $::boxen_user,
+      notify => Exec['killall Dock'];
   }
 }

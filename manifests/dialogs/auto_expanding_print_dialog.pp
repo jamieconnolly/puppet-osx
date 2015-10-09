@@ -8,19 +8,19 @@ class osx::dialogs::auto_expanding_print_dialog($ensure = 'present') {
     default => false
   }
 
-  boxen::osx_defaults { 'Expand print panel by default':
-    ensure => present,
-    domain => 'NSGlobalDomain',
-    key    => 'PMPrintingExpandedStateForPrint',
-    value  => $enabled,
-    user   => $::boxen_user;
-  }
+  boxen::osx_defaults {
+    'Expand print panel by default':
+      ensure => present,
+      domain => 'NSGlobalDomain',
+      key    => 'PMPrintingExpandedStateForPrint',
+      value  => $enabled,
+      user   => $::boxen_user;
 
-  boxen::osx_defaults { 'Expand print panel by default (part 2)':
-    ensure => present,
-    domain => 'NSGlobalDomain',
-    key    => 'PMPrintingExpandedStateForPrint2',
-    value  => $enabled,
-    user   => $::boxen_user;
+    'Expand print panel by default (part 2)':
+      ensure => present,
+      domain => 'NSGlobalDomain',
+      key    => 'PMPrintingExpandedStateForPrint2',
+      value  => $enabled,
+      user   => $::boxen_user;
   }
 }
