@@ -13,6 +13,7 @@ class osx::dock::indicator_lights($ensure = 'present') {
   boxen::osx_defaults { 'Toggle indicator lights under running applications':
     domain => 'com.apple.dock',
     key    => 'show-process-indicators',
+    type   => 'bool',
     value  => $enabled,
     user   => $::boxen_user,
     notify => Exec['killall Dock'];

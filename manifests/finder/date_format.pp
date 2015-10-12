@@ -9,7 +9,7 @@
 class osx::finder::date_format($format = 'relative') {
   include osx::finder
 
-  validate_re($format, '^(relative|absolute)$', "osx::finder::date_format([ensure] must be 'relative' or 'absolute', is ${format}")
+  validate_re($format, '^(absolute|relative)$', "osx::finder::date_format([ensure] must be 'absolute' or 'relative', is ${format}")
 
   $format_bool = $format ? {
     'relative' => true,
@@ -22,7 +22,6 @@ class osx::finder::date_format($format = 'relative') {
     'StandardViewSettings:ListViewSettings:useRelativeDates',
     'StandardViewSettings:ExtendedListViewSettings:useRelativeDates'
   ]:
-    ensure => present,
     path   => "/Users/${::boxen_user}/Library/Preferences/com.apple.finder.plist",
     type   => 'bool',
     value  => $format_bool,

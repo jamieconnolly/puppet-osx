@@ -23,7 +23,7 @@ class osx::finder::default_location($location = 'home', $path = undef) {
     default        => 'PfHm'
   }
 
-  boxen::osx_defaults { 'set the default location when opening a new window':
+  boxen::osx_defaults { 'Set the default location when opening a new window':
     domain => 'com.apple.finder',
     key    => 'NewWindowTarget',
     type   => 'string',
@@ -34,7 +34,7 @@ class osx::finder::default_location($location = 'home', $path = undef) {
   if $path != undef and $location == 'other' {
     validate_absolute_path($path)
 
-    boxen::osx_defaults { 'set the default location path when opening a new window':
+    boxen::osx_defaults { 'Set the default location path when opening a new window':
       domain => 'com.apple.finder',
       key    => 'NewWindowTargetPath',
       type   => 'string',

@@ -18,13 +18,12 @@ class osx::finder::icon_arrangement($style = 'grid') {
     'FK_StandardViewSettings:IconViewSettings:arrangeBy',
     'StandardViewSettings:IconViewSettings:arrangeBy'
   ]:
-    ensure => present,
     path   => "/Users/${::boxen_user}/Library/Preferences/com.apple.finder.plist",
     type   => 'string',
     value  => $_style,
     notify => [
       Exec['killall Finder'],
-      Exec['remove all .DS_Store files']
+      Exec['Remove all .DS_Store files']
     ]
   }
 }

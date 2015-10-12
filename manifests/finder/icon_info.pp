@@ -15,13 +15,12 @@ class osx::finder::icon_info($ensure = 'present') {
     'FK_StandardViewSettings:IconViewSettings:showItemInfo',
     'StandardViewSettings:IconViewSettings:showItemInfo'
   ]:
-    ensure => present,
     path   => "/Users/${::boxen_user}/Library/Preferences/com.apple.finder.plist",
     type   => 'bool',
     value  => $enabled,
     notify => [
       Exec['killall Finder'],
-      Exec['remove all .DS_Store files']
+      Exec['Remove all .DS_Store files']
     ]
   }
 }

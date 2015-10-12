@@ -12,7 +12,7 @@ class osx::finder::default_search_scope($scope = 'current folder') {
     default          => 'SCcf'
   }
 
-  boxen::osx_defaults { 'set the default scope used when searching':
+  boxen::osx_defaults { 'Set the default scope used when searching':
     domain => 'com.apple.finder',
     key    => 'FXDefaultSearchScope',
     type   => 'string',

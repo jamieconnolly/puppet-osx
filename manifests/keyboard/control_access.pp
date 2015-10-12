@@ -1,4 +1,4 @@
-# Public: Toggle keyboard access for dialog controls
+# Public: Set keyboard access for dialog controls
 
 class osx::keyboard::control_access($mode = 'basic') {
   validate_re($mode, '^(basic|all_controls|all_controls_including_dropdowns)$', "osx::keyboard::control_access([ensure] must be one of: basic, all_controls, all_controls_including_dropdowns; is ${mode}")
@@ -9,8 +9,7 @@ class osx::keyboard::control_access($mode = 'basic') {
     default                            => 1,
   }
 
-  boxen::osx_defaults { 'Set keyboard access for controls':
-    ensure => present,
+  boxen::osx_defaults { 'Set keyboard access for dialog controls':
     domain => 'NSGlobalDomain',
     key    => 'AppleKeyboardUIMode',
     type   => 'int',

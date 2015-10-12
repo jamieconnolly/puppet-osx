@@ -19,6 +19,7 @@ class osx::dock::style($style = '3D') {
   boxen::osx_defaults { 'Set the style of the Dock':
     domain => 'com.apple.dock',
     key    => 'no-glass',
+    type   => 'bool',
     value  => $style_mode,
     user   => $::boxen_user,
     notify => Exec['killall Dock'];

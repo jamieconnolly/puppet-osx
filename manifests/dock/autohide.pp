@@ -1,9 +1,9 @@
-# Public: Automatically hide the dock
+# Public: Automatically hide the Dock
 #
 # Parameters
 #
 #   delay =>
-#     The delay when auto-hiding the dock
+#     The delay when auto-hiding the Dock
 #
 
 class osx::dock::autohide($ensure = 'present', $delay = undef) {
@@ -16,16 +16,17 @@ class osx::dock::autohide($ensure = 'present', $delay = undef) {
     default => false
   }
 
-  boxen::osx_defaults { 'Automatically hide the dock':
+  boxen::osx_defaults { 'Toggle whether to automatically hide the Dock':
     domain => 'com.apple.dock',
     key    => 'autohide',
+    type   => 'bool',
     value  => $enabled,
     user   => $::boxen_user,
     notify => Exec['killall Dock'];
   }
 
   if $delay != undef {
-    boxen::osx_defaults { 'Set the delay when auto-hiding the dock':
+    boxen::osx_defaults { 'Set the delay when auto-hiding the Dock':
       domain => 'com.apple.dock',
       key    => 'autohide-delay',
       type   => 'float',

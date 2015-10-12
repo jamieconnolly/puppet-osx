@@ -10,7 +10,7 @@ class osx::dock::minimize_to_application($ensure = 'present') {
     default => false
   }
 
-  boxen::osx_defaults { 'minimize windows into application icon':
+  boxen::osx_defaults { 'Toggle whether to minimize windows into application icon':
     domain => 'com.apple.dock',
     key    => 'minimize-to-application',
     type   => 'bool',

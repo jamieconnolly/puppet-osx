@@ -10,9 +10,10 @@ class osx::finder::status_bar($ensure = 'present') {
     default => false
   }
 
-  boxen::osx_defaults { 'toggle whether to show the Finder status bar':
+  boxen::osx_defaults { 'Toggle whether to show the Finder status bar':
     domain => 'com.apple.finder',
     key    => 'ShowStatusBar',
+    type   => 'bool',
     value  => $enabled,
     user   => $::boxen_user,
     notify => Exec['killall Finder']

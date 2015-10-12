@@ -9,15 +9,17 @@ class osx::touchpad::gestures::page_swiping($ensure = 'present') {
   }
 
   boxen::osx_defaults {
-    'toggle the ability to swipe to switch pages (mouse)':
+    'Toggle the ability to swipe to switch pages (mouse)':
       domain => 'NSGlobalDomain',
       key    => 'AppleEnableMouseSwipeNavigateWithScrolls',
+      type   => 'int',
       value  => $enabled_int,
       user   => $::boxen_user;
 
-    'toggle the ability to swipe to switch pages (trackpad)':
+    'Toggle the ability to swipe to switch pages (trackpad)':
       domain => 'NSGlobalDomain',
       key    => 'AppleEnableSwipeNavigateWithScrolls',
+      type   => 'int',
       value  => $enabled_int,
       user   => $::boxen_user;
   }

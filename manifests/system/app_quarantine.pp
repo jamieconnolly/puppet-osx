@@ -8,9 +8,10 @@ class osx::system::app_quarantine($ensure = 'present') {
     default => false
   }
 
-  boxen::osx_defaults { 'toggle the downloaded app quarantine':
+  boxen::osx_defaults { 'Toggle the downloaded app quarantine':
     domain => 'com.apple.LaunchServices',
     key    => 'LSQuarantine',
+    type   => 'bool',
     value  => $enabled,
     user   => $::boxen_user;
   }

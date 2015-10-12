@@ -10,9 +10,10 @@ class osx::finder::posix_title_path($ensure = 'present') {
     default => false
   }
 
-  boxen::osx_defaults { 'toggle whether to show the full POSIX file path in the Finder title bar':
+  boxen::osx_defaults { 'Toggle whether to show the full POSIX file path in the Finder title bar':
     domain => 'com.apple.finder',
     key    => '_FXShowPosixPathInTitle',
+    type   => 'bool',
     value  => $enabled,
     user   => $::boxen_user,
     notify => Exec['killall Finder']

@@ -1,7 +1,7 @@
 # Public: Set the interval between software update checks
 
-class osx::system::update::schedule($frequency = 'daily') {
-  validate_re($frequency, '^(daily)$', "osx::system::update::schedule([ensure] must be daily; is ${frequency}")
+class osx::system::update::schedule($frequency = 'weekly') {
+  validate_re($frequency, '^(daily|weekly)$', "osx::system::update::schedule([ensure] must be daily; is ${frequency}")
 
   $frequency_int = $frequency ? {
     'daily'  => 1,
@@ -9,7 +9,7 @@ class osx::system::update::schedule($frequency = 'daily') {
     default  => 1
   }
 
-  boxen::osx_defaults { 'set the interval between software update checks':
+  boxen::osx_defaults { 'Set the interval between software update checks':
     domain => '/Library/Preferences/com.apple.SoftwareUpdate',
     key    => 'ScheduleFrequency',
     type   => 'int',

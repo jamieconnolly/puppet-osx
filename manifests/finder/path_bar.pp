@@ -10,9 +10,10 @@ class osx::finder::path_bar($ensure = 'present') {
     default => false
   }
 
-  boxen::osx_defaults { 'toggle whether to show the Finder path bar':
+  boxen::osx_defaults { 'Toggle whether to show the Finder path bar':
     domain => 'com.apple.finder',
     key    => 'ShowPathBar',
+    type   => 'bool',
     value  => $enabled,
     user   => $::boxen_user,
     notify => Exec['killall Finder']

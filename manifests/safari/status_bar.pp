@@ -8,9 +8,10 @@ class osx::safari::status_bar($ensure = 'present') {
     default => false
   }
 
-  boxen::osx_defaults { 'toggle whether to show the safari status bar':
+  boxen::osx_defaults { 'Toggle whether to show the status bar':
     domain => 'com.apple.Safari',
     key    => 'ShowStatusBar',
+    type   => 'bool',
     value  => $enabled,
     user   => $::boxen_user;
   }

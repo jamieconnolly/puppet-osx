@@ -9,10 +9,9 @@ class osx::keyboard::default_to_alternate_function_keys($ensure = 'present') {
   }
 
   boxen::osx_defaults { 'Toggle "alternate" function keys when holding "fn" key':
-    ensure => present,
     domain => 'NSGlobalDomain',
     key    => 'com.apple.keyboard.fnState',
-    type   => 'boolean',
+    type   => 'bool',
     value  => $enabled,
     user   => $::boxen_user;
   }

@@ -9,24 +9,21 @@ class osx::touchpad::gestures::tap_to_click($ensure = 'present') {
   }
 
   boxen::osx_defaults {
-    'toggle tap-to-click (part 1)':
-      ensure => present,
+    'Toggle tap-to-click (part 1)':
       domain => 'com.apple.driver.AppleBluetoothMultitouch.trackpad',
       key    => 'Clicking',
       type   => 'int',
       value  => $enabled_int,
       user   => $::boxen_user;
 
-    'toggle tap-to-click (part 2)':
-      ensure => present,
+    'Toggle tap-to-click (part 2)':
       domain => 'NSGlobalDomain',
       key    => 'com.apple.mouse.tapBehavior',
       type   => 'int',
       value  => $enabled_int,
       user   => $::boxen_user;
 
-    'toggle tap-to-click (part 3)':
-      ensure => present,
+    'Toggle tap-to-click (part 3)':
       domain => 'NSGlobalDomain',
       host   => 'currentHost',
       key    => 'com.apple.mouse.tapBehavior',

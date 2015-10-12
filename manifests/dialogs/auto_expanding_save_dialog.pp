@@ -9,10 +9,10 @@ class osx::dialogs::auto_expanding_save_dialog($ensure = 'present') {
   }
 
   boxen::osx_defaults { 'Expand save panel by default':
-    ensure => present,
     domain => 'NSGlobalDomain',
     key    => 'NSNavPanelExpandedStateForSaveMode',
-    value  => $enabled
+    type   => 'bool',
+    value  => $enabled,
     user   => $::boxen_user;
   }
 }

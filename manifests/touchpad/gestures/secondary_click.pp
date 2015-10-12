@@ -14,22 +14,24 @@ class osx::touchpad::gestures::secondary_click($ensure = 'present') {
   }
 
   boxen::osx_defaults {
-    'toggle secondary "right" click (mouse)':
+    'Toggle secondary "right" click (mouse)':
       domain => 'com.apple.driver.AppleBluetoothMultitouch.mouse',
       key    => 'MouseButtonMode',
       type   => 'string',
       value  => $mouse_mode,
       user   => $::boxen_user;
 
-    'toggle secondary "right" click (internal touchpad)':
+    'Toggle secondary "right" click (internal touchpad)':
       domain => 'NSGlobalDomain',
       key    => 'com.apple.trackpad.enableSecondaryClick',
+      type   => 'bool',
       value  => $enabled,
       user   => $::boxen_user;
 
-    'toggle secondary "right" click (external touchpad)':
+    'Toggle secondary "right" click (external touchpad)':
       domain => 'com.apple.driver.AppleBluetoothMultitouch.trackpad',
       key    => 'TrackpadRightClick',
+      type   => 'bool',
       value  => $enabled,
       user   => $::boxen_user;
   }

@@ -2,7 +2,7 @@
 
 class osx::mouse::movement($scrolling = undef, $tracking = undef) {
   if $scrolling != undef {
-    boxen::osx_defaults { 'set the speed with which the mouse scrolls content':
+    boxen::osx_defaults { 'Set the speed with which the mouse scrolls content':
       domain => 'NSGlobalDomain',
       key    => 'com.apple.scrollwheel.scaling',
       type   => 'float',
@@ -12,7 +12,7 @@ class osx::mouse::movement($scrolling = undef, $tracking = undef) {
   }
 
   if $tracking != undef {
-    boxen::osx_defaults { 'set the speed with which mouse movement moves the cursor':
+    boxen::osx_defaults { 'Set the speed with which the mouse moves the cursor':
       domain => 'NSGlobalDomain',
       key    => 'com.apple.mouse.scaling',
       type   => 'float',

@@ -9,9 +9,9 @@ class osx::keyboard::accented_press_and_hold($ensure = 'present') {
   }
 
   boxen::osx_defaults { 'Toggle press-and-hold for accented characters':
-    ensure => present,
     domain => 'NSGlobalDomain',
     key    => 'ApplePressAndHoldEnabled',
+    type   => 'bool',
     value  => $enabled,
     user   => $::boxen_user;
   }

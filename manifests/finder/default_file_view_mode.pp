@@ -19,7 +19,7 @@ class osx::finder::default_file_view_mode($mode = 'list') {
     default      => 'Nlsv'
   }
 
-  boxen::osx_defaults { 'set the default file view mode':
+  boxen::osx_defaults { 'Set the default file view mode':
     domain => 'com.apple.finder',
     key    => 'FXPreferredViewStyle',
     type   => 'string',
@@ -27,7 +27,7 @@ class osx::finder::default_file_view_mode($mode = 'list') {
     user   => $::boxen_user,
     notify => [
       Exec['killall Finder'],
-      Exec['remove all .DS_Store files']
+      Exec['Remove all .DS_Store files']
     ]
   }
 }

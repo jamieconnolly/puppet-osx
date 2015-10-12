@@ -14,7 +14,7 @@ class osx::finder::default_search_group_by($grouping = 'none') {
     default            => capitalize($grouping)
   }
 
-  boxen::osx_defaults { 'set the default grouping used when searching':
+  boxen::osx_defaults { 'Set the default grouping used when searching':
     domain => 'com.apple.finder',
     key    => 'FXPreferredGroupBy',
     type   => 'string',

@@ -8,9 +8,10 @@ class osx::network::dsstores($ensure = 'present') {
     default => true
   }
 
-  boxen::osx_defaults { 'toggle the creation of .DS_Store on network volumes':
+  boxen::osx_defaults { 'Toggle the creation of .DS_Store on network volumes':
     domain => 'com.apple.desktopservices',
     key    => 'DSDontWriteNetworkStores',
+    type   => 'bool',
     value  => $enabled,
     user   => $::boxen_user;
   }

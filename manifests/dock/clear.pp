@@ -4,9 +4,10 @@ class osx::dock::clear {
   include osx::dock
 
   boxen::osx_defaults {
-    'Prevent launchpad from reappearing':
+    'Prevent Launchpad from reappearing':
       domain => 'com.apple.dock',
       key    => 'checked-for-launchpad',
+      type   => 'bool',
       value  => true,
       user   => $::boxen_user,
       notify => Exec['killall Dock'];

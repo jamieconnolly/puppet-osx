@@ -6,12 +6,12 @@
 #     The orientation of the Dock ('top', 'right', 'bottom' or 'left')
 #
 
-class osx::dock::orientation($orientation = 'right') {
+class osx::dock::orientation($orientation = 'bottom') {
   include osx::dock
 
   validate_re($orientation, '^(top|right|bottom|left)$', "osx::dock::orientation([orientation] must be one of the following: top, right, bottom, left, is ${orientation}")
 
-  boxen::osx_defaults { 'dock orientation':
+  boxen::osx_defaults { 'Set the Dock orientation':
     domain => 'com.apple.dock',
     key    => 'orientation',
     type   => 'string',

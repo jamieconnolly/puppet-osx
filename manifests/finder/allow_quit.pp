@@ -13,6 +13,7 @@ class osx::finder::allow_quit($ensure = 'present') {
   boxen::osx_defaults { 'Toggle the ability to quit Finder':
     domain => 'com.apple.finder',
     key    => 'QuitMenuItem',
+    type   => 'bool',
     value  => $enabled,
     user   => $::boxen_user,
     notify => Exec['killall Finder'];

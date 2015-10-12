@@ -4,45 +4,67 @@ describe 'osx::dock::magnification' do
   let(:facts) { {:boxen_user => 'ilikebees'} }
 
   it do
-    should contain_boxen__osx_defaults('magnification').with({
-      :key    => 'magnification',
-      :domain => 'com.apple.dock',
-      :value  => true,
-      :user   => facts[:boxen_user]
-    })
+    should include_class('osx::dock')
   end
 
-  it do
-    should contain_boxen__osx_defaults('magnification_size').with({
-      :key    => 'largesize',
-      :domain => 'com.apple.dock',
-      :value  => '128',
-      :user   => facts[:boxen_user]
-    })
-  end
-
-  context 'given false' do
-    let(:params) { { :magnification => false } }
-    it do
-      should contain_boxen__osx_defaults('magnification').with({
+  describe 'defaults' do
+    it 'should set the value to true' do
+      should contain_boxen__osx_defaults('Toggle icon magnification').with({
+        :domain => 'com.apple.dock',
         :key    => 'magnification',
+        :type   => 'bool',
+        :value  => true,
+        :user   => facts[:boxen_user],
+        :notify => 'Exec[killall Dock]',
+      })
+      should_not contain_boxen__osx_defaults('Set the magnified icon size')
+    end
+  end
+
+  describe 'enabled' do
+    let(:params) { {:ensure => 'present'} }
+
+    it 'should set the value to true' do
+      should contain_boxen__osx_defaults('Toggle icon magnification').with({
         :domain => 'com.apple.dock',
+        :key    => 'magnification',
+        :type   => 'bool',
+        :value  => true,
+        :user   => facts[:boxen_user],
+        :notify => 'Exec[killall Dock]',
+      })
+      should_not contain_boxen__osx_defaults('Set the magnified icon size')
+    end
+  end
+
+  describe 'disabled' do
+    let(:params) { {:ensure => 'absent'} }
+
+    it 'should set the value to false' do
+      should contain_boxen__osx_defaults('Toggle icon magnification').with({
+        :domain => 'com.apple.dock',
+        :key    => 'magnification',
+        :type   => 'bool',
         :value  => false,
-        :user   => facts[:boxen_user]
+        :user   => facts[:boxen_user],
+        :notify => 'Exec[killall Dock]',
       })
+      should_not contain_boxen__osx_defaults('Set the magnified icon size')
     end
   end
 
-  context 'given a magnification_size' do
-    let(:params) { { :magnification_size => 64 } }
-    it do
-      should contain_boxen__osx_defaults('magnification_size').with({
-        :key    => 'largesize',
+  describe 'with magnified icon size set' do
+    let(:params) { {:magnified_icon_size => 64} }
+
+    it 'should set the value to 64' do
+      should contain_boxen__osx_defaults('Set the magnified icon size').with({
         :domain => 'com.apple.dock',
+        :key    => 'largesize',
+        :type   => 'int',
         :value  => 64,
-        :user   => facts[:boxen_user]
+        :user   => facts[:boxen_user],
+        :notify => 'Exec[killall Dock]',
       })
     end
   end
-
 end

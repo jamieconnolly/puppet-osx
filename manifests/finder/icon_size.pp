@@ -8,13 +8,12 @@ class osx::finder::icon_size($size = 32) {
     'FK_StandardViewSettings:IconViewSettings:iconSize',
     'StandardViewSettings:IconViewSettings:iconSize'
   ]:
-    ensure => present,
     path   => "/Users/${::boxen_user}/Library/Preferences/com.apple.finder.plist",
     type   => 'int',
     value  => $size,
     notify => [
       Exec['killall Finder'],
-      Exec['remove all .DS_Store files']
+      Exec['Remove all .DS_Store files']
     ]
   }
 }

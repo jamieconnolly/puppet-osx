@@ -5,9 +5,9 @@ class osx::finder {
     'killall Finder':
       refreshonly => true;
 
-    'remove all .DS_Store files':
+    'Remove all .DS_Store files':
       command     => 'find / -xdev -name .DS_Store -delete',
-      user        => root,
+      user        => 'root',
       refreshonly => true;
   }
 }

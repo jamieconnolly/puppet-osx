@@ -9,6 +9,7 @@ class osx::finder::file_extensions($display_all = undef, $warn_on_change = undef
     boxen::osx_defaults { 'Toggle whether to show all the filename extensions':
       domain => 'NSGlobalDomain',
       key    => 'AppleShowAllExtensions',
+      type   => 'bool',
       value  => $display_all,
       user   => $::boxen_user,
       notify => Exec['killall Finder'];
@@ -21,6 +22,7 @@ class osx::finder::file_extensions($display_all = undef, $warn_on_change = undef
     boxen::osx_defaults { 'Toggle the warning before changing an extension':
       domain => 'com.apple.finder',
       key    => 'FXEnableExtensionChangeWarning',
+      type   => 'bool',
       value  => $warn_on_change,
       user   => $::boxen_user,
       notify => Exec['killall Finder'];

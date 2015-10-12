@@ -16,7 +16,6 @@ class osx::finder::icon_label($position = undef, $size = undef) {
       'FK_StandardViewSettings:IconViewSettings:labelOnBottom',
       'StandardViewSettings:IconViewSettings:labelOnBottom'
     ]:
-      ensure => present,
       path   => "/Users/${::boxen_user}/Library/Preferences/com.apple.finder.plist",
       type   => 'bool',
       value  => $position_mode,
@@ -30,13 +29,12 @@ class osx::finder::icon_label($position = undef, $size = undef) {
       'FK_StandardViewSettings:IconViewSettings:textSize',
       'StandardViewSettings:IconViewSettings:textSize'
     ]:
-      ensure => present,
       path   => "/Users/${::boxen_user}/Library/Preferences/com.apple.finder.plist",
       type   => 'int',
       value  => $size,
       notify => [
         Exec['killall Finder'],
-        Exec['remove all .DS_Store files']
+        Exec['Remove all .DS_Store files']
       ]
     }
   }

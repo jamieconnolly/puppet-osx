@@ -8,8 +8,7 @@ class osx::safari::full_website_address($ensure = 'present') {
     default => false
   }
 
-  boxen::osx_defaults { 'toggle whether to show the full website address':
-    ensure => present,
+  boxen::osx_defaults { 'Toggle whether to show the full website address':
     domain => 'com.apple.Safari',
     key    => 'ShowFullURLInSmartSearchField',
     type   => 'bool',

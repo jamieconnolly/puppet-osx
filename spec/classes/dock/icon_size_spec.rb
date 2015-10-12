@@ -5,21 +5,32 @@ describe 'osx::dock::icon_size' do
 
   it do
     should include_class('osx::dock')
-    should contain_boxen__osx_defaults('icon size').with_value(36)
   end
 
-  describe 'with parameters' do
+  describe 'defaults' do
+    it 'should set the value to 36' do
+      should contain_boxen__osx_defaults('Set the icon size').with({
+        :domain => 'com.apple.dock',
+        :key    => 'tilesize',
+        :type   => 'int',
+        :value  => 36,
+        :user   => facts[:boxen_user],
+        :notify => 'Exec[killall Dock]',
+      })
+    end
+  end
+
+  describe 'with size set' do
     let(:params) { {:size => 1} }
 
-    it 'allows you to pass a size' do
-      should include_class('osx::dock')
-
-      should contain_boxen__osx_defaults('icon size').with({
-        :key    => 'tilesize',
+    it 'should set the value to 1' do
+      should contain_boxen__osx_defaults('Set the icon size').with({
         :domain => 'com.apple.dock',
+        :key    => 'tilesize',
+        :type   => 'int',
         :value  => 1,
+        :user   => facts[:boxen_user],
         :notify => 'Exec[killall Dock]',
-        :user   => facts[:boxen_user]
       })
     end
   end

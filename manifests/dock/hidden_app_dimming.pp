@@ -13,6 +13,7 @@ class osx::dock::hidden_app_dimming($ensure = 'present') {
   boxen::osx_defaults { 'Dim hidden apps':
     domain => 'com.apple.dock',
     key    => 'showhidden',
+    type   => 'bool',
     value  => $enabled,
     user   => $::boxen_user,
     notify => Exec['killall Dock'];

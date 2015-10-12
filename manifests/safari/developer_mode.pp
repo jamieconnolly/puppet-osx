@@ -8,8 +8,7 @@ class osx::safari::developer_mode($ensure = 'present') {
     default => false
   }
 
-  boxen::osx_defaults { 'toggle develop menu':
-    ensure => present,
+  boxen::osx_defaults { 'Toggle develop menu in Safari':
     domain => 'com.apple.Safari',
     key    => 'IncludeDevelopMenu',
     type   => 'bool',

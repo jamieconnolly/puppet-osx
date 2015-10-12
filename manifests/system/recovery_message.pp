@@ -1,6 +1,6 @@
 # Public: Add a recovery message to the OS X Lock Screen
 
-define osx::recovery_message($ensure = 'present', $value = $name) {
+define osx::system::recovery_message($ensure = 'present', $value = $name) {
   $kextdir     = '/System/Library/Extensions'
   $eficachedir = '/System/Library/Caches/com.apple.corestorage/EFILoginLocalizations'
 
@@ -8,7 +8,7 @@ define osx::recovery_message($ensure = 'present', $value = $name) {
   # it into a single-quoted exec. If it does contain an apostrophe, fail and
   # alert the user
   if '\'' in $value {
-    fail('Your osx::recovery_message declaration contains an apostrophe (\'),',
+    fail('Your osx::system::recovery_message declaration contains an apostrophe (\'),',
       'which will cause the exec used to set the message to fail. Please',
       "remove the apostrophe and try again. Your message: \"${value}\"")
   }
@@ -18,35 +18,35 @@ define osx::recovery_message($ensure = 'present', $value = $name) {
   #
   # The CS cache can be updated directly by touching $eficachedir, if it exists.
   # Otherwise you will need to touch $kextdir to generate it.
-  exec { 'Refresh system kext cache':
+  exec {
+    'Refresh system kext cache':
       command     => "/usr/bin/touch ${kextdir}",
       creates     => $eficachedir,
       refreshonly => true,
-      user        => root
-  }
+      user        => 'root';
 
-  exec { 'Refresh CoreStorage EFI Cache':
+    'Refresh CoreStorage EFI cache':
       command     => "/usr/bin/touch ${eficachedir}",
       onlyif      => "test -d ${eficachedir}",
       refreshonly => true,
-      user        => root
+      user        => 'root';
   }
 
   if $ensure == 'present' {
     if $value != undef {
-      boxen::osx_defaults { 'Set OS X Recovery Message':
-        ensure => present,
+      boxen::osx_defaults { 'Set OS X recovery message':
         domain => '/Library/Preferences/com.apple.loginwindow.plist',
         key    => 'LoginwindowText',
+        type   => 'string',
         value  => $value,
         user   => 'root',
         notify => [
           Exec['Refresh system kext cache'],
-          Exec['Refresh CoreStorage EFI Cache']
+          Exec['Refresh CoreStorage EFI cache']
         ]
       }
 
-      exec { 'Set OS X Recovery Message NVRAM Variable':
+      exec { 'Set OS X recovery message NVRAM variable':
         command => "nvram good-samaritan-message='${value}'",
         unless  => "nvram good-samaritan-message | cut -c24- | grep '^${value}$'",
         user    => 'root'
@@ -55,18 +55,18 @@ define osx::recovery_message($ensure = 'present', $value = $name) {
       fail('Cannot set an OS X recovery message without a value')
     }
   } else {
-    boxen::osx_defaults { 'Remove OS X Recovery Message':
+    boxen::osx_defaults { 'Remove OS X recovery message':
       ensure => absent,
       domain => '/Library/Preferences/com.apple.loginwindow.plist',
       key    => 'LoginwindowText',
       user   => 'root',
       notify => [
         Exec['Refresh system kext cache'],
-        Exec['Refresh CoreStorage EFI Cache']
+        Exec['Refresh CoreStorage EFI cache']
       ]
     }
 
-    exec { 'Remove OS X Recovery Message NVRAM Variable':
+    exec { 'Remove OS X recovery message NVRAM variable':
       command => 'nvram -d good-samaritan-message',
       onlyif  => 'nvram -p | grep good-samaritan-message',
       user    => 'root'

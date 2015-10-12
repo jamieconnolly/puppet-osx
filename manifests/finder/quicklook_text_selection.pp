@@ -13,6 +13,7 @@ class osx::finder::quicklook_text_selection($ensure = 'present') {
   boxen::osx_defaults { 'Toggle whether you can select text in Quick Look windows':
     domain => 'com.apple.finder',
     key    => 'QLEnableTextSelection',
+    type   => 'bool',
     value  => $enabled,
     user   => $::boxen_user,
     notify => Exec['killall Finder'];

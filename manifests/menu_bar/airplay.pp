@@ -10,9 +10,10 @@ class osx::menu_bar::airplay($ensure = 'present') {
     default => false
   }
 
-  boxen::osx_defaults { 'toggle whether to show the airplay icon in the menu bar':
-    key    => 'showInMenuBarIfPresent',
+  boxen::osx_defaults { 'Toggle whether to show the AirPlay icon in the menu bar':
     domain => 'com.apple.airplay',
+    key    => 'showInMenuBarIfPresent',
+    type   => 'bool',
     value  => $enabled,
     user   => $::boxen_user,
     notify => Exec['killall SystemUIServer'];

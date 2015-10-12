@@ -9,6 +9,7 @@ class osx::trash::when_emptying($secure = undef, $warn = undef) {
     boxen::osx_defaults { 'Toggle whether to securely empty the trash':
       domain => 'com.apple.finder',
       key    => 'EmptyTrashSecurely',
+      type   => 'bool',
       value  => $secure,
       user   => $::boxen_user,
       notify => Exec['killall Finder'];
@@ -21,6 +22,7 @@ class osx::trash::when_emptying($secure = undef, $warn = undef) {
     boxen::osx_defaults { 'Toggle the warning when emptying the trash':
       domain => 'com.apple.finder',
       key    => 'WarnOnEmptyTrash',
+      type   => 'bool',
       value  => $warn,
       user   => $::boxen_user,
       notify => Exec['killall Finder'];

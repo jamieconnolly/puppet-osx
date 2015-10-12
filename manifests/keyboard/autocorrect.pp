@@ -9,9 +9,9 @@ class osx::keyboard::autocorrect($ensure = 'present') {
   }
 
   boxen::osx_defaults { 'Toggle autocorrect':
-    ensure => present,
     domain => 'NSGlobalDomain',
     key    => 'NSAutomaticSpellingCorrectionEnabled',
+    type   => 'bool',
     value  => $enabled,
     user   => $::boxen_user;
   }

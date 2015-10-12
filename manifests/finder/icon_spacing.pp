@@ -8,13 +8,12 @@ class osx::finder::icon_spacing($spacing = 100) {
     'FK_StandardViewSettings:IconViewSettings:gridSpacing',
     'StandardViewSettings:IconViewSettings:gridSpacing'
   ]:
-    ensure => present,
     path   => "/Users/${::boxen_user}/Library/Preferences/com.apple.finder.plist",
     type   => 'int',
     value  => $spacing,
     notify => [
       Exec['killall Finder'],
-      Exec['remove all .DS_Store files']
+      Exec['Remove all .DS_Store files']
     ]
   }
 }

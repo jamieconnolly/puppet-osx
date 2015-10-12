@@ -16,9 +16,9 @@ class osx::dock::magnification($ensure = 'present', $magnified_icon_size = undef
     default => false
   }
 
-  boxen::osx_defaults { 'toggle magnification':
-    key    => 'magnification',
+  boxen::osx_defaults { 'Toggle icon magnification':
     domain => 'com.apple.dock',
+    key    => 'magnification',
     type   => 'bool',
     value  => $enabled,
     user   => $::boxen_user,
@@ -26,9 +26,9 @@ class osx::dock::magnification($ensure = 'present', $magnified_icon_size = undef
   }
 
   if $magnified_icon_size != undef {
-    boxen::osx_defaults { 'set magnified icon size':
-      key    => 'largesize',
+    boxen::osx_defaults { 'Set the magnified icon size':
       domain => 'com.apple.dock',
+      key    => 'largesize',
       type   => 'int',
       value  => $magnified_icon_size,
       user   => $::boxen_user,

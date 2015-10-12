@@ -8,9 +8,10 @@ class osx::finder::animations($ensure = 'present') {
     default => true
   }
 
-  boxen::osx_defaults { 'toggle finder animations':
+  boxen::osx_defaults { 'Toggle Finder animations':
     domain => 'com.apple.finder',
     key    => 'DisableAllAnimations',
+    type   => 'bool',
     value  => $enabled,
     user   => $::boxen_user
   }

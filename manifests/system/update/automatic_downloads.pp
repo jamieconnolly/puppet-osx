@@ -8,9 +8,10 @@ class osx::system::update::automatic_downloads($ensure = 'present') {
     default => false
   }
 
-  boxen::osx_defaults { 'toggle whether software updates are downloaded in the background when available':
+  boxen::osx_defaults { 'Toggle whether software updates are downloaded in the background':
     domain => 'AutomaticDownload',
     key    => '/Library/Preferences/com.apple.SoftwareUpdate',
+    type   => 'bool',
     value  => $enabled,
     user   => 'root';
   }

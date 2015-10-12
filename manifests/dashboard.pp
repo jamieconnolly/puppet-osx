@@ -11,6 +11,7 @@ class osx::dashboard($ensure = 'present') {
   boxen::osx_defaults { 'Toggle whether dashboard is enabled':
     domain => 'com.apple.dashboard',
     key    => 'mcx-disabled',
+    type   => 'bool',
     value  => $enabled,
     user   => $::boxen_user,
     notify => Exec['killall Dashboard'],
