@@ -17,6 +17,7 @@ class osx::finder::icon_preview($ensure = 'present') {
   ]:
     ensure => present,
     path   => "/Users/${::boxen_user}/Library/Preferences/com.apple.finder.plist",
+    type   => 'bool',
     value  => $enabled,
     notify => [
       Exec['killall Finder'],

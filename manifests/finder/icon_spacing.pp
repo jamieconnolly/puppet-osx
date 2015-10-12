@@ -10,6 +10,7 @@ class osx::finder::icon_spacing($spacing = 100) {
   ]:
     ensure => present,
     path   => "/Users/${::boxen_user}/Library/Preferences/com.apple.finder.plist",
+    type   => 'int',
     value  => $spacing,
     notify => [
       Exec['killall Finder'],

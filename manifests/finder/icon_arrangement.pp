@@ -20,6 +20,7 @@ class osx::finder::icon_arrangement($style = 'grid') {
   ]:
     ensure => present,
     path   => "/Users/${::boxen_user}/Library/Preferences/com.apple.finder.plist",
+    type   => 'string',
     value  => $_style,
     notify => [
       Exec['killall Finder'],

@@ -24,6 +24,7 @@ class osx::finder::date_format($format = 'relative') {
   ]:
     ensure => present,
     path   => "/Users/${::boxen_user}/Library/Preferences/com.apple.finder.plist",
+    type   => 'bool',
     value  => $format_bool,
     notify => Exec['killall Finder']
   }

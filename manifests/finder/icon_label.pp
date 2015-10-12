@@ -18,6 +18,7 @@ class osx::finder::icon_label($position = undef, $size = undef) {
     ]:
       ensure => present,
       path   => "/Users/${::boxen_user}/Library/Preferences/com.apple.finder.plist",
+      type   => 'bool',
       value  => $position_mode,
       notify => Exec['killall Finder']
     }
@@ -31,6 +32,7 @@ class osx::finder::icon_label($position = undef, $size = undef) {
     ]:
       ensure => present,
       path   => "/Users/${::boxen_user}/Library/Preferences/com.apple.finder.plist",
+      type   => 'int',
       value  => $size,
       notify => [
         Exec['killall Finder'],

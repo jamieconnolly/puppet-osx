@@ -10,6 +10,7 @@ class osx::finder::icon_size($size = 32) {
   ]:
     ensure => present,
     path   => "/Users/${::boxen_user}/Library/Preferences/com.apple.finder.plist",
+    type   => 'int',
     value  => $size,
     notify => [
       Exec['killall Finder'],

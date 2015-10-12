@@ -17,6 +17,7 @@ class osx::my_docs::group_by($grouping = 'none') {
   plist_entry { 'MyDocsLibrarySearchViewSettings:GroupBy':
     ensure => present,
     path   => "/Users/${::boxen_user}/Library/Preferences/com.apple.finder.plist",
+    type   => 'string',
     value  => $groupBy,
     notify => [
       Exec['killall Finder'],
